@@ -1,4 +1,4 @@
-# 🥔 JagariCo Object Detection (YOLOv8)
+# 🥔 Jagarico Object Detection (YOLOv8)
 
 YOLOv8を用いて「じゃがりこ」の3フレーバーを物体検出するプロジェクト。
 
@@ -79,6 +79,12 @@ YOLOv8を用いて「じゃがりこ」の3フレーバーを物体検出する�
 
 # 📈 学習挙動分析
 
+## 📉 Train vs Validation Loss
+
+![Train vs Val Loss](assets/Train_vs_Validation_Box_Loss.png)
+
+TrainとValidationの乖離は限定的であり、
+過学習は軽微と判断。
 ### Loss推移
 
 - Train / Validationともに減少傾向
