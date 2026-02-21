@@ -121,3 +121,9 @@ POST /predict/jagarico
 ```
 
 ---
+
+## 📊 モデル概要
+- YOLOv8
+- 3クラス分類
+- 小規模データ学習
+- 評価指標：mAP / Precision / Recall
