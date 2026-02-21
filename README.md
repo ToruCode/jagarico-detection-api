@@ -63,7 +63,7 @@ YOLOv8を用いて「じゃがりこ」の3フレーバーを物体検出する�
 
 ## 📈 mAP推移
 
-![mAP Curve](assets/Validation mAP.png)
+![mAP Curve](assets/Validation%20mAP.png)
 
 ---
 
