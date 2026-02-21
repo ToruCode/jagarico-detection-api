@@ -81,7 +81,7 @@ YOLOv8を用いて「じゃがりこ」の3フレーバーを物体検出する�
 
 ## 📉 Train vs Validation Loss
 
-![Train vs Val Loss](assets/Train_vs_Validation_Box_Loss.png)
+![Train vs Val Loss](assets/Train%20vs%20Validation%20Box%20Loss.png)
 
 TrainとValidationの乖離は限定的であり、
 過学習は軽微と判断。
