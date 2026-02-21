@@ -43,10 +43,8 @@ YOLOv8を用いて「じゃがりこ」の3フレーバーを物体検出する�
 
 - モデル：YOLOv8n
 - Epoch：100
-- Optimizer：SGD（デフォルト）
 - 画像サイズ：640
 - バッチサイズ：16
-- EarlyStopping：未使用
 
 ---
 
