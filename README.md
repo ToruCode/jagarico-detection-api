@@ -95,6 +95,10 @@ TrainとValidationの乖離は限定的であり、
 
 ---
 
+## 📊 Precision / Recall推移
+
+![Precision Recall](assets/Precision%20&%20Recall%20推移.png)
+
 ### Precision / Recall推移
 
 - Precisionは安定的に上昇
