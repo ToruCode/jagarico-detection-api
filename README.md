@@ -1,129 +1,156 @@
-# じゃがりこ物体検出 API（YOLOv8 × FastAPI）
+# 🥔 JagariCo Object Detection (YOLOv8)
 
-本プロジェクトは、YOLOv8を用いた物体検出モデルをFastAPIでAPI化したものです。
+YOLOv8を用いて「じゃがりこ」の3フレーバーを物体検出するプロジェクト。
 
-単にモデルを学習するだけでなく、
+- cheese
+- jaga_butter
+- salad
 
-- 推論パイプライン設計
-- API構築
-- 再現性のある環境構築
-- エラーハンドリング
-- 推論時間計測
-
-までを一貫して実装しています。
+小規模データ環境（135枚）での検出精度評価と分析を実施。
 
 ---
 
-## 🧠 背景
+## 🎯 プロジェクト目的
 
-本プロジェクトは、物体検出モデルを「実運用を想定したAPI」として構築することを目的に作成しました。
-
-データ数は135枚と少規模ですが、
-
-- 少量データでの学習設計
-- 過学習への配慮
-- 推論速度の可視化
-- APIとしての拡張性
-
-を重視しています。
+- 小規模データでの物体検出性能検証
+- クラス別性能差の分析
+- 学習挙動（Loss推移）の可視化
+- 改善仮説の立案
 
 ---
 
-## 🛠 使用技術
+## 🧠 技術スタック
 
-- Python 3.11
-- YOLOv8（Ultralytics）
+- Python
+- YOLOv8 (Ultralytics)
 - PyTorch
-- FastAPI
-- Uvicorn
-- OpenCV
-- python-multipart
+- Google Colab (A100 GPU)
+- matplotlib
+- Roboflow (アノテーション)
 
 ---
 
-## 📂 データセット
+## 📂 データ概要
 
+- 総画像数：135枚
 - クラス数：3
-  - サラダ味
-  - チーズ味
-  - じゃがバター味
-- 画像数：135枚
-- アノテーション形式：Polygon
-- 学習環境：Google Colab
+- train/val/test 分割済み
+- バウンディングボックス形式アノテーション
 
 ---
 
-## 📦 プロジェクト構成
-├── api.py
+## ⚙️ 学習設定
 
-├── requirements.txt
-
-├── .gitignore
-
-├── uploads/
-
-├── output/
+- モデル：YOLOv8n
+- Epoch：100
+- Optimizer：SGD（デフォルト）
+- 画像サイズ：640
+- バッチサイズ：16
+- EarlyStopping：未使用
 
 ---
 
-## 🚀 環境構築
+# 📊 結果
+
+## 🔹 全体指標
+
+| 指標 | 値 |
+|------|------|
+| Precision | 0.925 |
+| Recall | 0.865 |
+| mAP@0.5 | 0.951 |
+| mAP@0.5:0.95 | 0.824 |
+
+小規模データながらmAP@0.5で0.95以上を達成。
+
+---
+
+## 🔹 クラス別性能
+
+| クラス | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+|--------|----------|--------|--------|-------------|
+| cheese | 0.964 | 0.848 | 0.980 | 0.869 |
+| jaga_butter | 0.928 | 0.779 | 0.922 | 0.765 |
+| salad | 0.881 | 0.968 | 0.952 | 0.838 |
+
+---
+
+# 📈 学習挙動分析
+
+### Loss推移
+
+- Train / Validationともに減少傾向
+- 90〜100epochで収束
+- 過学習の兆候は限定的
+
+（ここに results.png を貼る）
+
+---
+
+### Precision / Recall推移
+
+- Precisionは安定的に上昇
+- Recallはクラスごとに差あり
+
+---
+
+### mAP推移
+
+- mAP@0.5は早期に0.9以上へ到達
+- mAP@0.5:0.95も安定上昇
+
+---
+
+# 🧠 考察
+
+## 1️⃣ 全体傾向
+
+小規模データにもかかわらず高精度達成。
+YOLOv8の事前学習の有効性を確認。
+
+---
+
+## 2️⃣ クラス別差異分析
+
+### jaga_butter
+
+- Recallが低め
+→ 見逃しがやや多い
+
+- mAP@0.5:0.95も低い
+→ 位置精度がやや不安定
+
+原因仮説：
+- cheeseとの視覚的類似
+- データ枚数の偏り
+- 特徴量の曖昧性
+
+---
+
+### salad
+
+- Recallが非常に高い
+→ 検出は安定
+
+- Precisionがやや低め
+→ 他クラスと誤検出の可能性
+
+---
+
+# 💡 今後の展開
+
+- FastAPI化
+- Streamlitデモアプリ化
+- リアルタイム検出への拡張
+- 医療物品検出応用への転用検討
+
+---
+
+# 📎 実行方法
 
 ```bash
-python -m venv venv
-# Windowsの場合
-.\venv\Scripts\activate
-pip install -r requirements.txt
+pip install ultralytics
+yolo train model=yolov8n.pt data=data.yaml epochs=100 imgsz=640
 ```
 
 ---
-
-## ▶ 起動方法
-
-```bash
-uvicorn api:app --reload --host 127.0.0.1 --port 8000
-```
-
-起動後、以下にアクセス：
-
-```bash
-http://127.0.0.1:8000/docs
-```
-
-Swagger UIから動作確認できます。
-
----
-
-## 📡 API仕様
-
-POST /predict/jagarico
-
-入力
-- multipart/form-data
-- 画像ファイル
-
-出力例
-```bash
-{
-  "detections": [
-    {
-      "label": "salad",
-      "confidence": 0.91,
-      "bbox": [120, 55, 300, 220]
-    }
-  ],
-  "counts": {
-    "salad": 1,
-    "cheese": 0,
-    "tarako_butter": 0
-  },
-  "inference_ms": 38.4
-}
-```
-
----
-
-## 📊 モデル概要
-- YOLOv8
-- 3クラス分類
-- 小規模データ学習
-- 評価指標：mAP / Precision / Recall
