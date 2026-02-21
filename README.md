@@ -76,3 +76,48 @@ pip install -r requirements.txt
 ```
 
 ---
+
+## ▶ 起動方法
+
+```bash
+uvicorn api:app --reload --host 127.0.0.1 --port 8000
+```
+
+起動後、以下にアクセス：
+
+```bash
+http://127.0.0.1:8000/docs
+```
+
+Swagger UIから動作確認できます。
+
+---
+
+## 📡 API仕様
+
+POST /predict/jagarico
+
+入力
+- multipart/form-data
+- 画像ファイル
+
+出力例
+```bash
+{
+  "detections": [
+    {
+      "label": "salad",
+      "confidence": 0.91,
+      "bbox": [120, 55, 300, 220]
+    }
+  ],
+  "counts": {
+    "salad": 1,
+    "cheese": 0,
+    "tarako_butter": 0
+  },
+  "inference_ms": 38.4
+}
+```
+
+---
