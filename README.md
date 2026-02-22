@@ -110,6 +110,22 @@ TrainとValidationの乖離は限定的であり、
 - Recallはクラスごとに差あり
 
 ---
+
+# 🚀 API Usage
+
+## 1️⃣ サーバー起動
+
+```bash
+uvicorn api:app --reload
+```
+Open:
+
+```bash
+http://127.0.0.1:8000/docs
+```
+
+---
+
 ## 推論結果
 
 ![result](assets/inference_result.png)
