@@ -110,6 +110,11 @@ TrainとValidationの乖離は限定的であり、
 - Recallはクラスごとに差あり
 
 ---
+## Inference Result
+
+![result](assets/inference_result.png)
+
+---
 
 # 🧠 考察
 
