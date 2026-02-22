@@ -111,6 +111,12 @@ TrainとValidationの乖離は限定的であり、
 
 ---
 
+## 推論結果
+
+![result](assets/inference_result.png)
+
+---
+
 # 🚀 API Usage
 
 ## 1️⃣ サーバー起動
@@ -123,12 +129,6 @@ Open:
 ```bash
 http://127.0.0.1:8000/docs
 ```
-
----
-
-## 推論結果
-
-![result](assets/inference_result.png)
 
 ---
 
