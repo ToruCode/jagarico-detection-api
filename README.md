@@ -132,6 +132,10 @@ http://127.0.0.1:8000/docs
 
 ---
 
+## 📷 Example Output
+
+![Sample Output](assets/output.jpg)
+
 # 🧠 考察
 
 ## 1️⃣ 全体傾向
